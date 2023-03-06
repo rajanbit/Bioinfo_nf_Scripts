@@ -1,5 +1,9 @@
 #!/usr/bin/env nextflow
 
+/*
+ * Workflow for removing duplicate sequences using seqkit
+ */
+ 
 nextflow.enable.dsl=2
 
 params.file = "$baseDir/seq/*.fasta"
@@ -22,7 +26,6 @@ process remove_duplicates {
 	script:
 		"""
 		seqkit rmdup ${seq_file} -s -o ${seq_file}.duprem
-		mv ${seq_file}.duprem output
 		"""
 	}
 
@@ -42,3 +45,5 @@ workflow.onComplete {
 		log.info "\n>> Duplicates removed with ERRORS after $workflow.duration"
 		}
 	}
+	
+// Usage: $ nextflow run remove_duplicates.nf
